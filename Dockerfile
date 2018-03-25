@@ -28,8 +28,11 @@ RUN adduser --quiet --disabled-password --shell /bin/bash --home /home/${login_s
 # Modification du mot de passe pour "${login_ssh}"
 RUN echo "${login_ssh}:${password_ssh}" | chpasswd
 
+# Ajout des droits admin pour "${login_ssh}"
+RUN usermod -a -G root ${login_ssh}
+
 # Ports
-EXPOSE 22 4309
+EXPOSE 22 3306 4309
 
 # script de lancement des services et d affichage de l'accueil
 COPY services.sh /root/services.sh
